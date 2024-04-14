@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRAMSTER</title>
+    <!-- GOOGLE FONT LINK -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Dancing+Script:wght@400..700&display=swap"
+        rel="stylesheet">
+   <link rel="stylesheet" href="./style/index.css">
+</head>
+
+<body>
+    <div class="biggercont">
+        <div class="container">
+            <h1 class="text">Gramster</h1>
+    
+            <input type="text" id="loginname" placeholder="Phone Number, UserName or Email"><br><br>
+            <input type="password" id="loginpassword" placeholder="password">
+            <button id="btn">Login</button>
+            <div class="or">
+                <hr><span>OR</span>
+                <hr>
+    
+            </div>
+            <a href="">Log in with Facebook</a>
+            <a href="">Forget password?</a>
+        </div>
+        <div class="down">
+            <span>Don't have an Account?</span>
+            <button id="signupbtn" onclick="handlesignupbtn()">SignUp</button>
+        </div>
+    </div>
+
+    <script>
+        console.log(window.location.href)
+         function handlesignupbtn() {
+            window.location.href = "http://127.0.0.1:5500/signup.html"
+
+        }
+    </script>
+    <script type="module" src="./JS/index.js"></script>
+</body>
+
+</html>

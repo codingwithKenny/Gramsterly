@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <form  id="myPost">
+     <input type="text" id="username" placeholder="USERNAME"><br><br>
+    <input type="file" id="picture">
+    <input type="text" id="usercaption" placeholder="CAPTION"><br><br>
+    <input type="date" id="postdate" >
+    <input type="submit" id="button" value="ADD">
+
+    </form>
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore,collection,addDoc} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getStorage,ref,uploadBytes,getDownloadURL} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBkAkDKd9nJWiArUySOO0Py93w8-2ziVPg",
+            authDomain: "gramster-b0506.firebaseapp.com",
+            projectId: "gramster-b0506",
+            storageBucket: "gramster-b0506.appspot.com",
+            messagingSenderId: "823188809037",
+            appId: "1:823188809037:web:42938901167bc2a48f4304",
+            measurementId: "G-RXZ1JV23QZ"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const storage = getStorage(app)
+        const db = getFirestore(app)
+        const colRef = collection(db,'post')
+       
+
+
+
+
+       async  function form(e) {
+        e.preventDefault()
+        let userName = username.value
+        let caption = usercaption.value
+        let postDate = postdate.value
+        let file = picture.files[0]
+        let random = Math.floor(Math.random()*12345)
+        
+       
+        try {
+            const storageRef = ref(storage, 'images/' + (file.name + random))
+            const  picres = await uploadBytes(storageRef, file)
+            console.log(picres)
+            // get URL
+            const downloadURL = await getDownloadURL(storageRef)
+            console.log(downloadURL)
+              
+            // addpost to Firestore
+            let post ={
+            userName,
+            caption,
+            postDate,
+            media:{
+                type: file.type.startsWith('image/') ? 'image' : 'video',
+                url: downloadURL
+            }
+        }
+
+             let  userPost = await addDoc(colRef, post)
+             console.log(userPost)
+
+        } catch (error) {
+            console.log(error)
+        }
+     
+                        
+        }
+
+        myPost.addEventListener('submit', form)
+      
+
+        
+       
+      
+    
+
+       
+        
+      
+
+        
+       
+    
+    </script>
+
+</body>
+</html>
